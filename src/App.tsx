@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useAuthenticator } from '@aws-amplify/ui-react';
 import type { Schema } from "../amplify/data/resource";
 import { generateClient } from "aws-amplify/data";
+import FileUploadButton from "./components/FileUploadButton";
 
 const client = generateClient<Schema>();
 
@@ -26,7 +27,13 @@ function App() {
   return (
     <main>
       <h1>{user?.signInDetails?.loginId} todos</h1>
-      <button onClick={createTodo}>+ new</button>
+      <FileUploadButton buttonText="+ new" onUploaded={(objectKey) => {
+    // OPTIONAL: Wenn du willst, dass nach Upload in der Liste was erscheint,
+    // kannst du hier ein Todo mit objectKey anlegen.
+    // Wenn du das nicht willst: diesen Block einfach leer lassen.
+    // client.models.Todo.create({ content: objectKey });
+  }}
+/>
       <ul>
         {todos.map((todo) => (
           <li
